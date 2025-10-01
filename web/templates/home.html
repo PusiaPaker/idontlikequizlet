@@ -1,0 +1,13 @@
+{{define "title"}}Home{{end}}
+{{template "base.html" .}}
+
+{{define "content"}}
+  <h2>{{.Message}}</h2>
+  <ul>
+    {{range .Decks}}
+      <li>{{.ID}} - {{.Name}}</li>
+    {{else}}
+      <li>No decks found.</li>
+    {{end}}
+  </ul>
+{{end}}
