@@ -1,0 +1,29 @@
+# Go build artifacts
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Go coverage / profiling files
+*.cover
+*.coverprofile
+*.pprof
+
+# Local dev stuff
+.env
+.env.*
+*.local
+*.log
+
+# Build / dist output (if you use go build -o ./bin)
+bin/
+dist/
+
+# Editor / OS clutter
+.vscode/
+.idea/
+*.iml
+.DS_Store
