@@ -11,7 +11,7 @@ func HomeHandle(w http.ResponseWriter, r *http.Request) {
 		"Active": "home",
 		"Decks":  []struct{ ID int; Name string }{}, // fill from DB
 	}
-	if err := tmpl.T.ExecuteTemplate(w, "home", data); err != nil {
+	if err := tmpl.T.ExecuteTemplate(w, "base", data); err != nil {
 		http.Error(w, err.Error(), 500)
 	}
 }

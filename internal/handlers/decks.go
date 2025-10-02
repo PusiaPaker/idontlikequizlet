@@ -30,7 +30,7 @@ func HandleDecks(w http.ResponseWriter, r *http.Request) {
 		"Decks":   decks,
 	}
 
-	if err := tmpl.T.ExecuteTemplate(w, "home", data); err != nil {
+	if err := tmpl.T.ExecuteTemplate(w, "base", data); err != nil {
 		http.Error(w, err.Error(), 500)
 	}
 }

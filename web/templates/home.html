@@ -1,13 +1,21 @@
-{{define "title"}}Home{{end}}
-{{template "base.html" .}}
-
+{{define "title"}}Home — Quizlet Lite{{end}}
 {{define "content"}}
-  <h2>{{.Message}}</h2>
-  <ul>
-    {{range .Decks}}
-      <li>{{.ID}} - {{.Name}}</li>
-    {{else}}
-      <li>No decks found.</li>
-    {{end}}
-  </ul>
+  <h1 class="h3 mb-3">{{.Message}}</h1>
+  <p class="text-body-secondary">This is your lightweight study tool.</p>
+
+  {{if .Decks}}
+    <div class="card">
+      <div class="card-header">Your Decks</div>
+      <ul class="list-group list-group-flush">
+        {{range .Decks}}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span class="text-truncate">{{.Name}}</span>
+            <a class="btn btn-sm btn-outline-primary" href="/study/{{.ID}}">Study</a>
+          </li>
+        {{end}}
+      </ul>
+    </div>
+  {{else}}
+    <div class="alert alert-info">No decks yet.</div>
+  {{end}}
 {{end}}
