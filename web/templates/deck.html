@@ -1,0 +1,66 @@
+{{define "deck"}}
+  {{template "base" .}}
+{{end}}
+
+{{define "title"}}{{.DeckName}}{{end}}
+
+{{define "content"}}
+  <style>
+    .term-card {
+      display: grid;
+      grid-template-columns: 35% 65%;
+      gap: 1rem;
+      border: 1px solid var(--bs-border-color);
+      border-radius: .75rem;
+      padding: 1rem 1.25rem;
+      background: var(--bs-card-bg);
+      box-shadow: 0 .125rem .25rem rgba(0, 0, 0, 0.04);
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+
+    .term-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 .25rem .75rem rgba(0, 0, 0, 0.08);
+    }
+
+    .term {
+      font-weight: 600;
+      color: var(--bs-body-color);
+      word-wrap: break-word;
+    }
+
+    .definition {
+      color: var(--bs-secondary-color);
+      word-wrap: break-word;
+    }
+
+    .term-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .term-card {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
+  <div class="container mt-4">
+    <h1 class="mb-4">{{.DeckName}}</h1>
+
+    {{if .Cards}}
+      <div class="term-list">
+        {{range .Cards}}
+          <div class="term-card">
+            <div class="term">{{.Term}}</div>
+            <div class="definition">{{.Definition}}</div>
+          </div>
+        {{end}}
+      </div>
+    {{else}}
+      <p>No cards found for this deck.</p>
+    {{end}}
+  </div>
+{{end}}

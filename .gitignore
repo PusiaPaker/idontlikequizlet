@@ -17,10 +17,12 @@
 .env.*
 *.local
 *.log
+.air.toml
 
 # Build / dist output (if you use go build -o ./bin)
 bin/
 dist/
+tmp/
 
 # Editor / OS clutter
 .vscode/

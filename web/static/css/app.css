@@ -1,8 +1,13 @@
+/* Use Bootstrap spacing via .container; don't force global body margin */
 body {
-    font-family: sans-serif;
-    margin: 2rem;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
 }
 
-header {
-    margin-bottom: 1rem;
+.card {
+  transition: all 0.1s ease-in-out; /* apply to both enter + leave */
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
 }

@@ -1,17 +1,20 @@
 {{define "partials/header"}}
 <nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom">
   <div class="container">
-    <a class="navbar-brand fw-semibold" href="/">Quizlet Lite</a>
+    <a class="navbar-brand fw-semibold" href="/">idontlikequizlet</a>
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topnav"
             aria-controls="topnav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="topnav">
-      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item"><a class="nav-link {{if eq .Active "home"}}active{{end}}" href="/">Home</a></li>
-        <li class="nav-item"><a class="nav-link {{if eq .Active "decks"}}active{{end}}" href="/decks">Decks</a></li>
-        <li class="nav-item"><a class="nav-link {{if eq .Active "study"}}active{{end}}" href="/study/1">Study</a></li>
+        <li class="nav-item"><a class="nav-link {{if eq .Active "decks"}}active{{end}}" href="/decks">My Decks</a></li>
+        <li class="nav-item"><a class="nav-link {{if eq .Active "add"}}active{{end}}" href="/add">Add</a></li>
       </ul>
+
     </div>
   </div>
 </nav>

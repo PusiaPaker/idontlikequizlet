@@ -1,7 +1,6 @@
 package main
 
 import (
-	"html/template"
 	"log"
 	"net/http"
 
@@ -17,9 +16,7 @@ import (
 func main() {
 	_ = godotenv.Load()
 
-	tmpl.T = template.New("").Funcs(nil)
-	template.Must(tmpl.T.ParseGlob("web/templates/*.html"))
-	template.Must(tmpl.T.ParseGlob("web/templates/partials/*.html"))
+	tmpl.MustInit()
 
 	db.Pool = db.MustConnect()
 	defer db.Pool.Close()
@@ -27,7 +24,7 @@ func main() {
 	r := chi.NewRouter()
 	r.Get("/", handlers.HomeHandle)
 	r.Get("/ping", handlers.HandlePing)
-	r.Get("/decks", handlers.HandleDecks)
+	r.Get("/deck/{deckID}", handlers.HandleDeck)
 
 	// static files
 	r.Handle("/static/*", http.StripPrefix("/static/", http.FileServer(http.Dir("web/static"))))
