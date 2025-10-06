@@ -30,7 +30,12 @@ func main() {
 	r.Delete("/edit/{deckID}/delete/{cardID}", handlers.HandleDeleteCard)
 	r.Patch("/edit/{deckID}/update/{cardID}", handlers.HandleUpdateCard)
 	r.Patch("/edit/{deckID}/image/{cardID}", handlers.HandleUpdateCardImage)
+	r.Patch("/edit/{deckID}/update/title", handlers.HandleUpdateTitle)
 	
+	r.Get("/add", handlers.HandleCreateDeck)
+	r.Post("/add/{deckID}", handlers.HandleAddCard)
+
+
 	// static files
 	r.Handle("/static/*", http.StripPrefix("/static/", http.FileServer(http.Dir("web/static"))))
 

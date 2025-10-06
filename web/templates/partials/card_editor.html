@@ -1,0 +1,58 @@
+{{define "partials/card_editor"}}
+<div class="edit-card border rounded-3 mb-4 p-4 shadow-sm">
+
+  <div class="row g-4 align-items-start">
+    <div class="col-md-7">
+      <label for="term-{{.Index}}" class="form-label fw-semibold">Term</label>
+      <input
+        type="text"
+        class="form-control mb-3 card-term"
+        id="term-{{.Index}}"
+        name="term[]"
+        data-card-id="{{.Card.ID}}"
+        data-deck-id="{{.DeckID}}"
+        placeholder="Enter term..."
+        value="{{.Card.Term}}"
+      >
+    </div>
+
+    <div class="col-md-5">
+      <label class="form-label fw-semibold d-flex justify-content-between">
+        Image
+        <span class="text-muted small">optional</span>
+      </label>
+      <button
+        type="button"
+        class="image-slot w-100 border border-2 border-secondary-subtle bg-light-subtle"
+        title="Add image (coming soon)"
+      >
+        <div class="image-slot-inner">
+          <span class="image-plus">+</span>
+          <span class="image-text">Add Image</span>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <label for="def-{{.Index}}" class="form-label fw-semibold">Definition</label>
+    <textarea
+      class="form-control card-def"
+      id="def-{{.Index}}"
+      name="definition[]"
+      rows="5"
+      data-card-id="{{.Card.ID}}"
+      data-deck-id="{{.DeckID}}"
+      placeholder="Enter definition...">{{- .Card.Definition -}}</textarea>
+  </div>
+
+  <div class="d-flex justify-content-end mt-4">
+    <button
+      type="button"
+      class="btn btn-outline-danger px-4 fw-semibold delete-btn"
+      data-card-id="{{.Card.ID}}"
+      data-deck-id="{{.DeckID}}"
+    >DELETE</button>
+  </div>
+</div>
+{{end}}

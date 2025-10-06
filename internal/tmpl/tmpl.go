@@ -3,7 +3,23 @@ package tmpl
 import (
 	"html/template"
 	"time"
+	"fmt"
 )
+
+func dict(values ...any) (map[string]any, error) {
+	if len(values)%2 != 0 {
+		return nil, fmt.Errorf("invalid dict call: need even number of args")
+	}
+	m := make(map[string]any, len(values)/2)
+	for i := 0; i < len(values); i += 2 {
+		key, ok := values[i].(string)
+		if !ok {
+			return nil, fmt.Errorf("dict keys must be strings")
+		}
+		m[key] = values[i+1]
+	}
+	return m, nil
+}
 
 var (
 	Base *template.Template
@@ -14,11 +30,13 @@ var (
 
 func MustInit() {
 	// create base template with FuncMap BEFORE parsing
-	Base = template.New("base").Funcs(template.FuncMap{
-		"now": time.Now, // adds the now() function
-	})
+	funcs := template.FuncMap{
+		"now":  time.Now,
+		"dict": func(values ...any) (map[string]any, error) { return dict(values...) },
+	}
 
 	// parse base + partials
+	Base = template.New("base").Funcs(funcs)
 	template.Must(Base.ParseFiles("web/templates/base.html"))
 	template.Must(Base.ParseGlob("web/templates/partials/*.html"))
 

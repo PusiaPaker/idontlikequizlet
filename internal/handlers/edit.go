@@ -21,6 +21,8 @@ func HandleDeleteCard(w http.ResponseWriter, r *http.Request) {
 	res, err := db.Pool.Exec(ctx, delQuery, deckID, cardID)
 	if err != nil {
 		log.Fatalf("Error executing DELETE query: %v\n", err)
+		http.Error(w, "delete failed", http.StatusInternalServerError)
+		return
 	}
 
 	log.Printf("Deleted %v row(s)\n", res.RowsAffected())
@@ -36,8 +38,8 @@ func HandleUpdateCard(w http.ResponseWriter, r *http.Request){
 	cardID := chi.URLParam(r, "cardID")
 
 	type CardPayload struct {
-		Term       *string `json:"term,omitempty"`
-		Definition *string `json:"definition,omitempty"`
+		Term       	*string `json:"term,omitempty"`
+		Definition 	*string `json:"definition,omitempty"`
 	}
 
 	var p CardPayload
@@ -64,6 +66,36 @@ func HandleUpdateCard(w http.ResponseWriter, r *http.Request){
 	`, p.Term, p.Definition, deckID, cardID)
 	if err != nil {
 		log.Println("update error:", err)
+		http.Error(w, "update failed", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	_, _ = w.Write([]byte(`{"status":"ok"}`))
+}
+
+func HandleUpdateTitle(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	deckID := chi.URLParam(r, "deckID")
+
+	type DeckTitlePayload struct {
+		Name *string `json:"name"`
+	}
+
+	var p DeckTitlePayload
+	if err := json.NewDecoder(r.Body).Decode(&p); err != nil {
+		http.Error(w, "bad json", http.StatusBadRequest)
+		return
+	}
+	if p.Name == nil {
+		http.Error(w, "missing name", http.StatusBadRequest)
+		return
+	}
+	title := strings.TrimSpace(*p.Name)
+
+	_, err := db.Pool.Exec(ctx, `UPDATE decks SET name = $1 WHERE id = $2`, title, deckID)
+	if err != nil {
 		http.Error(w, "update failed", http.StatusInternalServerError)
 		return
 	}
@@ -113,7 +145,7 @@ func HandleEdit(w http.ResponseWriter, r *http.Request) {
 		DeckID	string
 		Cards	[]card
 	} {
-		Active: "decks",
+		Active: "add",
 		Name: 	deckName,
 		DeckID: deckID,
 		Cards: 	cards,
