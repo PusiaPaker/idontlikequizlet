@@ -1,0 +1,45 @@
+{{define "partials/footer"}}
+<footer class="site-footer mt-5 py-4 border-top">
+  <div class="container text-center text-muted">
+
+    <div class="d-flex justify-content-center align-items-center flex-wrap gap-3 mb-3">
+      <!-- GitHub link -->
+      <a href="https://github.com/pusiapaker/idontlikequizlet"
+         class="footer-link text-decoration-none d-flex align-items-center gap-1">
+        <i class="bi bi-github fs-5"></i>
+        <span>GitHub</span>
+      </a>
+
+      <!-- Another link -->
+      <a href="/about" class="footer-link text-decoration-none d-flex align-items-center gap-1">
+        <i class="bi bi-info-circle fs-5"></i>
+        <span>About</span>
+      </a>
+
+      <!-- Optional contact / email -->
+      <a href="mailto:contact@achelsto.com"
+         class="footer-link text-decoration-none d-flex align-items-center gap-1">
+        <i class="bi bi-envelope fs-5"></i>
+        <span>Contact</span>
+      </a>
+    </div>
+
+    <small class="d-block text-secondary">
+       {{ now.Year }} idontlikequizlet — Built using Go & Bootstrap
+    </small>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background-color: var(--bs-body-bg);
+  }
+  .footer-link {
+    color: var(--bs-secondary-color);
+    transition: color .15s ease;
+  }
+  .footer-link:hover {
+    color: var(--bs-primary);
+  }
+</style>
+{{end}}

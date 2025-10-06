@@ -49,10 +49,12 @@ func HandleDeck(w http.ResponseWriter, r *http.Request) {
 	data := struct {
 		Active string
 		DeckName string
+		DeckID	string
 		Cards []card 
 	} {
 		Active: "home",
 		DeckName: deckName,
+		DeckID: deckID,
 		Cards: cards,
 	}
 

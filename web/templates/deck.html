@@ -48,19 +48,28 @@
   </style>
 
   <div class="container mt-4">
-    <h1 class="mb-4">{{.DeckName}}</h1>
+  <div class="d-flex align-items-center justify-content-between mb-4">
+    <h1 class="mb-0">{{.DeckName}}</h1>
 
-    {{if .Cards}}
-      <div class="term-list">
-        {{range .Cards}}
-          <div class="term-card">
-            <div class="term">{{.Term}}</div>
-            <div class="definition">{{.Definition}}</div>
-          </div>
-        {{end}}
-      </div>
-    {{else}}
-      <p>No cards found for this deck.</p>
-    {{end}}
+    <!-- Edit button (link to your edit route) -->
+    <a class="btn btn-outline-primary"
+       href="/edit/{{.DeckID}}">
+      Edit
+    </a>
   </div>
+
+  {{if .Cards}}
+    <div class="term-list">
+      {{range .Cards}}
+        <div class="term-card">
+          <div class="term">{{.Term}}</div>
+          <div class="definition">{{.Definition}}</div>
+        </div>
+      {{end}}
+    </div>
+  {{else}}
+    <p>No cards found for this deck.</p>
+  {{end}}
+</div>
+
 {{end}}

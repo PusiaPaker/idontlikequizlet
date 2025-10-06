@@ -1,26 +1,34 @@
-// in package tmpl (or wherever you init templates)
 package tmpl
 
-import "html/template"
+import (
+	"html/template"
+	"time"
+)
 
 var (
-    Base *template.Template
-    Home *template.Template
-    Deck *template.Template
+	Base *template.Template
+	Home *template.Template
+	Deck *template.Template
+	Edit *template.Template
 )
 
 func MustInit() {
-    // 1) Load base + partials once
-    Base = template.Must(template.New("base").ParseFiles(
-        "web/templates/base.html",
-    ))
-    template.Must(Base.ParseGlob("web/templates/partials/*.html"))
+	// create base template with FuncMap BEFORE parsing
+	Base = template.New("base").Funcs(template.FuncMap{
+		"now": time.Now, // adds the now() function
+	})
 
-    // 2) Clone for HOME and add home page
-    Home = template.Must(Base.Clone())
-    template.Must(Home.ParseFiles("web/templates/home.html"))
+	// parse base + partials
+	template.Must(Base.ParseFiles("web/templates/base.html"))
+	template.Must(Base.ParseGlob("web/templates/partials/*.html"))
 
-    // 3) Clone for DECK and add deck page
-    Deck = template.Must(Base.Clone())
-    template.Must(Deck.ParseFiles("web/templates/deck.html"))
+	// clone for each page
+	Home = template.Must(Base.Clone())
+	template.Must(Home.ParseFiles("web/templates/home.html"))
+
+	Deck = template.Must(Base.Clone())
+	template.Must(Deck.ParseFiles("web/templates/deck.html"))
+
+	Edit = template.Must(Base.Clone())
+	template.Must(Edit.ParseFiles("web/templates/edit.html"))
 }

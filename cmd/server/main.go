@@ -25,7 +25,12 @@ func main() {
 	r.Get("/", handlers.HomeHandle)
 	r.Get("/ping", handlers.HandlePing)
 	r.Get("/deck/{deckID}", handlers.HandleDeck)
-
+	
+	r.Get("/edit/{deckID}", handlers.HandleEdit)
+	r.Delete("/edit/{deckID}/delete/{cardID}", handlers.HandleDeleteCard)
+	r.Patch("/edit/{deckID}/update/{cardID}", handlers.HandleUpdateCard)
+	r.Patch("/edit/{deckID}/image/{cardID}", handlers.HandleUpdateCardImage)
+	
 	// static files
 	r.Handle("/static/*", http.StripPrefix("/static/", http.FileServer(http.Dir("web/static"))))
 
