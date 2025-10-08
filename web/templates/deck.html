@@ -58,6 +58,8 @@
     </a>
   </div>
 
+  {{template "partials/flashstudy" .}}
+
   {{if .Cards}}
     <div class="term-list">
       {{range .Cards}}
@@ -71,5 +73,6 @@
     <p>No cards found for this deck.</p>
   {{end}}
 </div>
+<script src="/static/js/flashstudy.js"></script>
 
 {{end}}

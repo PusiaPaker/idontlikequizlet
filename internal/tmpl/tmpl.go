@@ -1,9 +1,11 @@
 package tmpl
 
 import (
-	"html/template"
-	"time"
+	"encoding/json"
 	"fmt"
+	"html/template"
+	"log"
+	"time"
 )
 
 func dict(values ...any) (map[string]any, error) {
@@ -33,6 +35,15 @@ func MustInit() {
 	funcs := template.FuncMap{
 		"now":  time.Now,
 		"dict": func(values ...any) (map[string]any, error) { return dict(values...) },
+		"toJSON": func(v any) template.JS {
+			b, err := json.Marshal(v)
+			if err != nil {
+				log.Println("toJSON error:", err)
+				return template.JS("[]")
+			}
+			// Return as JS literal (safe since inside <script type="application/json">)
+			return template.JS(b)
+		},
 	}
 
 	// parse base + partials

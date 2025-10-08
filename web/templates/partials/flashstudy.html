@@ -1,0 +1,172 @@
+{{define "partials/flashstudy"}}
+<section class="study">
+  <div class="stage">
+    <div id="flashcard" class="card3d" tabindex="0" aria-label="Flashcard (click to flip)">
+      <div id="card-inner" class="inner">
+
+        <!-- FRONT -->
+        <div class="face front">
+          <div class="eyebrow">Term</div>
+          <div id="front-text" class="text"></div>
+        </div>
+
+        <!-- BACK -->
+        <div class="face back">
+          <div class="eyebrow">Definition</div>
+          <div id="back-text" class="text"></div>
+        </div>
+
+        <!-- inside nav buttons (own space reserved via side padding) -->
+        <button id="prev" class="nav prev" title="Previous (←)" aria-label="Previous">
+            &#x276E;
+        </button>
+        <button id="next" class="nav next" title="Next (→)" aria-label="Next">
+            &#x276F;
+        </button>
+
+      </div>
+    </div>
+
+    <div class="help">
+      Click/tap card to flip • <strong>Space</strong> flips • <strong>← / →</strong> change cards
+      <span class="sep">|</span> <span id="counter">0/0</span>
+    </div>
+  </div>
+
+  <!-- data payload -->
+  <script id="flashstudy-data" type="application/json">
+    {{ toJSON .Cards }}
+  </script>
+</section>
+
+<style>
+.study {
+  min-height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  box-sizing: border-box;
+}
+
+.stage {
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 clamp(0.5rem, 2vw, 1.25rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card3d {
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
+  border: none;
+  outline: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.inner {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.35s ease;
+}
+
+.face {
+  position: relative;
+  backface-visibility: hidden;
+  border-radius: 1rem;
+  background: #fff;
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1.25rem 3.5rem;
+  min-height: clamp(280px, 50vh, 480px);
+  overflow: hidden;
+}
+
+.front { transform: rotateX(0deg); }
+.back  { transform: rotateX(180deg); position: absolute; inset: 0; }
+
+/* contrast between term and definition */
+.front .text { color: #1c1c1c; font-weight: 600; }
+.back .text  { color: #555; font-weight: 500; }
+
+/* subtle "Term"/"Definition" labels */
+.eyebrow {
+  color: #888;
+  font-size: .85rem;
+  margin-bottom: .35rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+/* mobile tweaks: tighter padding and smaller arrows */
+.text {
+  font-size: clamp(1rem, 2.6vw, 1.9rem);
+  line-height: 1.4;
+  text-align: center;
+  max-width: 60ch;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: auto;
+  transition: font-size 0.2s ease;
+}
+
+/* --- cleaner minimalist arrows --- */
+.nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: rgba(0, 0, 0, 0.25);
+  font-size: 2.25rem;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 5;
+  transition: color .2s ease, transform .2s ease;
+}
+.nav:hover { color: rgba(0, 0, 0, 0.55); transform: translateY(-50%) scale(1.05); }
+.nav:focus { outline: none; }
+.prev { left: 0.5rem; }
+.next { right: 0.5rem; }
+
+/* instructions */
+.help {
+  color: #6c757d;
+  text-align: center;
+  margin-top: .75rem;
+  font-size: .95rem;
+}
+.help .sep { margin: 0 .5rem; color: #adb5bd; }
+
+
+
+/* --- mobile tweaks --- */
+@media (max-width: 576px) {
+  .face {
+    padding: 1rem 2rem;
+    min-height: clamp(240px, 46vh, 440px);
+  }
+  .nav {
+    font-size: 1.8rem;
+  }
+  .prev { left: 0.25rem; }
+  .next { right: 0.25rem; }
+
+  /* bigger font for short terms/defs on mobile */
+  .text {
+    font-size: clamp(1.15rem, 4.5vw, 2.4rem);
+    line-height: 1.45;
+  }
+}
+
+
+</style>
+{{end}}
